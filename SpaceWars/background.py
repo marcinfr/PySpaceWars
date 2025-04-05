@@ -17,11 +17,10 @@ class Star:
         self.color = type[1]
 
 class Background:
-    move_frequence = 0.05
+    move_frequence = 0.06
 
     def __init__(self, game, stars_amount = 100):
         self.timer = timer.Timer()
-        self.timer.set_time(self.move_frequence)
         self.screen = game.screen
         self.stars = []
         for i in range(stars_amount):
@@ -36,7 +35,7 @@ class Background:
         for star in self.stars:
             self.screen.draw_dot(star.x, star.y, star.color)
 
-    def move(self):
+    def process(self):
         if not self.timer.has_elapsed():
             return
 
