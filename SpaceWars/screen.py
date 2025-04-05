@@ -23,6 +23,10 @@ class Screen:
         pygame.draw.line(self.screen, color, (x2, y2), (x1, y2))
         pygame.draw.line(self.screen, color, (x1, y2), (x1, y1))
 
+    def draw_image(self, x1, y1, path):
+        img = pygame.image.load(path)
+        self.screen.blit(img, (x1, y1))
+
     def display(self, bg_color = "black"):
         pygame.display.flip()
         self.screen.fill(bg_color)
