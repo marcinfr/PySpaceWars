@@ -6,6 +6,7 @@ class Screen:
         self.height = height
         pygame.init()
         self.screen = pygame.display.set_mode((width, height))
+        self.clock = pygame.time.Clock()
 
     def draw_dot(self, x, y, color):
         pygame.draw.circle(self.screen, color, (x, y), 1)
@@ -27,7 +28,14 @@ class Screen:
         img = pygame.image.load(path)
         self.screen.blit(img, (x1, y1))
 
+    def draw_text(self, x, y, text, color):
+        font = pygame.font.SysFont(pygame.font.get_default_font(), 25)
+        text = font.render(text, True, color)
+        self.screen.blit(text, (x, y))
+
     def display(self, bg_color = "black"):
+        self.clock.tick()
+        self.draw_text(self.width - 80, self.height - 25,f"{int(self.clock.get_fps())} fps", (255, 255, 255))
         pygame.display.flip()
         self.screen.fill(bg_color)
 

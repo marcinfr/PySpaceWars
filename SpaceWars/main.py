@@ -33,7 +33,7 @@ class Game:
         self.menu.display()
         self.screen.display()
 
-    def quit(self):
+    def quit(self, event_data):
         self.running = False
 
     def run(self):

@@ -4,7 +4,7 @@ class Menu:
         game.events.add_event("on_esc_key_down", self, "toggle_menu")
         self.is_displayed = False
 
-    def toggle_menu(self):
+    def toggle_menu(self, event_data):
         self.is_displayed = not self.is_displayed
 
     def display(self, width = 400, height = 600):
