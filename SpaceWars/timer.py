@@ -2,7 +2,7 @@ from datetime import datetime
 
 class Timer:
     def __init__(self):
-        self.start_time = 0
+        self.start_time = self.get_timestamp()
         self.time = 0
 
     @staticmethod
@@ -13,6 +13,9 @@ class Timer:
     def set_time(self, seconds):
         self.start_time = self.get_timestamp()
         self.time = seconds * 1000
+
+    def elapsed_time(self):
+        return (self.get_timestamp() - self.start_time) / 1000
 
     def has_elapsed(self):
         if self.start_time > 0:

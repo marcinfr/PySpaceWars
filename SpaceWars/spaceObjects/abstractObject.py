@@ -31,7 +31,7 @@ class AbstractObject:
         self.current_speed = self.max_speed
         self.speed = self.max_speed
 
-    def process(self):
+    def process(self, elapsed_time):
         if self.speed > self.current_speed:
             self.current_speed += self.speed_acceleration
         elif self.speed < self.current_speed:
@@ -50,18 +50,11 @@ class AbstractObject:
             speed_x = self.move_vector[0] * scale_factor
             speed_y = self.move_vector[1] * scale_factor
 
-        if self.current_speed_x > speed_x:
-            self.current_speed_x -= self.speed_acceleration
-        elif self.current_speed_x < speed_x:
-            self.current_speed_x += self.speed_acceleration
+        self.current_speed_x = speed_x
+        self.current_speed_y = speed_y
 
-        if self.current_speed_y > speed_y:
-            self.current_speed_y -= self.speed_acceleration
-        elif self.current_speed_y < speed_y:
-            self.current_speed_y += self.speed_acceleration
-
-        self.pos_x += self.current_speed_x
-        self.pos_y += self.current_speed_y
+        self.pos_x += self.current_speed_x * elapsed_time
+        self.pos_y += self.current_speed_y * elapsed_time
 
         if self.pos_x + self.width < 0:
             self.life = 0
@@ -74,3 +67,8 @@ class AbstractObject:
 
     def shoot(self):
         ...
+
+    def is_alive(self):
+        if self.life <= 0:
+            return False
+        return True

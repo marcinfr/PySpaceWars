@@ -1,8 +1,6 @@
 import timer
 
 class SpaceObjectsManager:
-    move_frequence = 0.01
-
     def __init__(self, game):
         self.space_objects = []
         self.screen = game.screen
@@ -16,17 +14,19 @@ class SpaceObjectsManager:
             space_object.display(self.screen)
 
     def process(self):
-        if not self.timer.has_elapsed():
+        elapsed_time = self.timer.elapsed_time()
+        if elapsed_time == 0:
             return
 
-        self.timer.set_time(self.move_frequence)
+        self.timer.set_time(0)
+
         enemies = []
         for space_object in self.space_objects:
             if space_object.is_enemy:
                 enemies.append(space_object)
 
         for space_object in self.space_objects:
-            space_object.process()
+            space_object.process(elapsed_time)
             if not space_object.is_enemy:
                 for enemy in enemies:
                     if enemy.has_collision(space_object):
