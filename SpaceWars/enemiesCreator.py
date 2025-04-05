@@ -15,10 +15,11 @@ class EnemiesCreator:
             self.space_objects_manager.add_object(enemy)
 
     def can_create(self):
-        if (self.timer.has_elapsed()
-                and random.randint(0, 100) <= 1 + self.stage):
-            self.timer.set_time(10)
-            return True
+        if self.timer.has_elapsed():
+            rand = random.randint(0, 400)
+            if rand <= 1 + self.stage:
+                return True
+            self.timer.set_time(0.1)
         return False
 
     def get_random_enemy(self):

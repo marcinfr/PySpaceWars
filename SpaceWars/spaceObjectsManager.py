@@ -19,9 +19,11 @@ class SpaceObjectsManager:
             return
 
         self.timer.set_time(0)
-
         enemies = []
         for space_object in self.space_objects:
+            if not space_object.is_alive():
+                self.space_objects.remove(space_object)
+
             if space_object.is_enemy:
                 enemies.append(space_object)
 
