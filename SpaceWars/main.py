@@ -5,6 +5,7 @@ import menu
 import stage
 import spaceObjectsManager
 import enemiesCreator
+import player
 
 class Game:
     def __init__(self):
@@ -15,7 +16,9 @@ class Game:
         self.menu = menu.Menu(self)
         self.space_objects_manager = spaceObjectsManager.SpaceObjectsManager(self)
         self.enemies_creator = enemiesCreator.EnemiesCreator(self)
+        self.player = player.Player(self)
         self.running = True
+        self.events.add_event("on_quit", self, "quit")
 
     def process(self):
         if self.menu.is_displayed:
@@ -30,8 +33,11 @@ class Game:
         self.menu.display()
         self.screen.display()
 
+    def quit(self):
+        self.running = False
+
     def run(self):
-        while not self.events.quit:
+        while self.running:
             self.events.collect()
             self.process()
             self.display()

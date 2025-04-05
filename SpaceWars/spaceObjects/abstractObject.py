@@ -6,10 +6,10 @@ class AbstractObject:
     width = 40
     height = 40
     life = 1
-    max_speed = 10
-    speed_acceleration = 1
+    max_speed = 100
+    speed_acceleration = 100
 
-    def __init__(self, pos_x, pos_y):
+    def __init__(self, pos_x, pos_y, name = "space_object"):
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.is_enemy = True
@@ -19,6 +19,8 @@ class AbstractObject:
         self.current_speed_y = 0
         self.speed = 0
         self.move_vector = [-2, 0]
+        self.name = name
+        self.controller = False
 
     def display(self, s:Screen):
         x1 = self.pos_x - self.width /2
@@ -28,14 +30,18 @@ class AbstractObject:
         s.draw_rect_border(x1, y1, x2, y2, "red")
 
     def set_max_speed(self):
-        self.current_speed = self.max_speed
         self.speed = self.max_speed
 
     def process(self, elapsed_time):
+        if self.controller:
+            self.controller.control(self)
+
+        speed_acceleration = self.speed_acceleration * elapsed_time
+
         if self.speed > self.current_speed:
-            self.current_speed += self.speed_acceleration
+            self.current_speed += speed_acceleration
         elif self.speed < self.current_speed:
-            self.current_speed -= self.speed_acceleration
+            self.current_speed -= speed_acceleration
 
         if self.current_speed > self.max_speed:
             self.current_speed = self.max_speed
@@ -50,8 +56,15 @@ class AbstractObject:
             speed_x = self.move_vector[0] * scale_factor
             speed_y = self.move_vector[1] * scale_factor
 
-        self.current_speed_x = speed_x
-        self.current_speed_y = speed_y
+        if self.current_speed_x > speed_x:
+            self.current_speed_x -= speed_acceleration
+        elif self.current_speed_x < speed_x:
+            self.current_speed_x += speed_acceleration
+
+        if self.current_speed_y > speed_y:
+            self.current_speed_y -= speed_acceleration
+        elif self.current_speed_y < speed_y:
+            self.current_speed_y += speed_acceleration
 
         self.pos_x += self.current_speed_x * elapsed_time
         self.pos_y += self.current_speed_y * elapsed_time

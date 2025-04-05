@@ -1,38 +1,54 @@
 import pygame
 
+class EventData:
+    ...
+
 class Events:
-    escKey = pygame.K_ESCAPE
+    key_esc = "esc"
+    key_up = "up"
+    key_down = "down"
+    key_left = "left"
+    key_right = "right"
+
+    keys_map = {
+        pygame.K_ESCAPE: key_esc,
+        pygame.K_UP: key_up,
+        pygame.K_DOWN: key_down,
+        pygame.K_LEFT: key_left,
+        pygame.K_RIGHT: key_right,
+    }
 
     def __init__(self):
-        self.quit = False
-        self.keys_pressed = []
-        self.keys_just_pressed = []
+        self.events = {}
 
     def collect(self):
-        self.keys_just_pressed = []
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.quit = True
-            elif (event.type == pygame.KEYDOWN
-                  and not event.key in self.keys_pressed):
-                self.keys_pressed.append(event.key)
-                self.keys_just_pressed.append(event.key)
-            elif (event.type == pygame.KEYUP
-                  and event.key in self.keys_pressed):
-                self.keys_pressed.remove(event.key)
+                self.dispatch("on_quit")
+            elif event.type == pygame.KEYDOWN:
+                self.dispatch_key(event.key, "down")
+            elif event.type == pygame.KEYUP:
+                self.dispatch_key(event.key, "up")
 
-    def is_key_pressed(self, key):
-        if type(key) == str:
-            key = ord(key)
+    def dispatch_key(self, key, suffix):
+        key_code = self.keys_map.get(key)
+        if not key_code:
+            if key in range(0x110000):
+                key_code = chr(key)
+        if key_code:
+            self.dispatch("on_" + key_code + "_key_" + suffix)
+            data = EventData()
+            data.key = key_code
+            self.dispatch("on_key_" + suffix, data)
 
-        if key in self.keys_pressed:
-            return True
-        return False
+    def add_event(self, code, obj, method):
+        if not code in self.events:
+            self.events[code] = []
+        self.events[code].append((obj, method))
 
-    def is_key_just_pressed(self, key):
-        if type(key) == str:
-            key = ord(key)
-
-        if key in self.keys_just_pressed:
-            return True
-        return False
+    def dispatch(self, code, data = False):
+        if not data:
+            data = EventData()
+        if code in self.events:
+            for event in self.events[code]:
+                getattr(event[0], event[1])(data)

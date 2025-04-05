@@ -1,13 +1,13 @@
 class Menu:
     def __init__(self, game):
         self.screen = game.screen
-        self.events = game.events
+        game.events.add_event("on_esc_key_down", self, "toggle_menu")
         self.is_displayed = False
 
-    def display(self, width = 400, height = 600):
-        if self.events.is_key_just_pressed(self.events.escKey):
-            self.is_displayed = not self.is_displayed
+    def toggle_menu(self):
+        self.is_displayed = not self.is_displayed
 
+    def display(self, width = 400, height = 600):
         if not self.is_displayed:
             return
 
