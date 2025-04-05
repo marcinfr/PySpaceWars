@@ -1,18 +1,24 @@
 import screen
 import background
 import events
+import menu
 
 screen = screen.Screen(1024, 768)
-background = background.Background(screen)
 events = events.Events()
+background = background.Background(screen)
+menu = menu.Menu(screen, events)
 running = True
 
 while not events.quit:
     events.collect()
-    background.move()
+
+    if not menu.display:
+        background.move()
+
     background.draw()
     screen.display()
-    if events.is_key_pressed(events.escKey):
-         print("esc")
+    if events.is_key_just_pressed(events.escKey):
+        menu.display = not menu.display
+
     if events.is_key_pressed("a"):
         print("a")
