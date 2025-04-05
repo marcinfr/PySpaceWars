@@ -11,20 +11,21 @@ class Game:
         self.menu = menu.Menu(self)
         self.running = True
 
+    def move(self):
+        if self.menu.is_displayed:
+            return
+        self.background.move()
+
+    def display(self):
+        self.background.display()
+        self.menu.display()
+        self.screen.display()
+
     def run(self):
         while not self.events.quit:
             self.events.collect()
-
-            if not self.menu.display:
-                self.background.move()
-
-            self.background.draw()
-            self.screen.display()
-            if self.events.is_key_just_pressed(self.events.escKey):
-                self.menu.display = not self.menu.display
-
-            if self.events.is_key_pressed("a"):
-                print("a")
+            self.move()
+            self.display()
 
 game = Game()
 game.run()

@@ -32,7 +32,7 @@ class Background:
                 )
             )
 
-    def draw(self):
+    def display(self):
         for star in self.stars:
             self.screen.draw_dot(star.x, star.y, star.color)
 
