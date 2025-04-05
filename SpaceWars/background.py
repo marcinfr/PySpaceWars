@@ -19,16 +19,16 @@ class Star:
 class Background:
     move_frequence = 0.05
 
-    def __init__(self, screen, stars_amount = 100):
+    def __init__(self, game, stars_amount = 100):
         self.timer = timer.Timer()
         self.timer.set_time(self.move_frequence)
-        self.screen = screen
+        self.screen = game.screen
         self.stars = []
         for i in range(stars_amount):
             self.stars.append(
                 Star(
-                    random.randint(0, screen.width),
-                    random.randint(0, screen.height)
+                    random.randint(0, self.screen.width),
+                    random.randint(0, self.screen.height)
                 )
             )
 
