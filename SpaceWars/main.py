@@ -6,10 +6,12 @@ import stage
 import spaceObjectsManager
 import enemiesCreator
 import player
+import timer
 
 class Game:
     def __init__(self):
         self.screen = screen.Screen(1024, 768)
+        self.timer = timer.Timer()
         self.events = events.Events()
         self.stage = stage.Stage()
         self.background = background.Background(self)
@@ -22,7 +24,9 @@ class Game:
 
     def process(self):
         if self.menu.is_displayed:
+            self.timer.pause()
             return
+        self.timer.tick()
         self.enemies_creator.create()
         self.background.process()
         self.space_objects_manager.process()

@@ -14,11 +14,8 @@ class SpaceObjectsManager:
             space_object.display(self.screen)
 
     def process(self):
-        elapsed_time = self.timer.elapsed_time()
-        if elapsed_time == 0:
-            return
-
-        self.timer.set_time(0)
+        elapsed_time = self.timer.get_elapsed_time("space_objects_movement")
+        self.timer.set_time("space_objects_movement")
         enemies = []
         for space_object in self.space_objects:
             if not space_object.is_alive():

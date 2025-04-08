@@ -1,6 +1,8 @@
 import pygame
 
 class Screen:
+    images = {}
+
     def __init__(self, width, height):
         self.width = width
         self.height = height
@@ -25,7 +27,10 @@ class Screen:
         pygame.draw.line(self.screen, color, (x1, y2), (x1, y1))
 
     def draw_image(self, x1, y1, path):
-        img = pygame.image.load(path)
+        img = self.images.get(path)
+        if not img:
+            img = pygame.image.load(path)
+            self.images[path] = img
         self.screen.blit(img, (x1, y1))
 
     def draw_text(self, x, y, text, color):

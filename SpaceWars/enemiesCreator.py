@@ -1,13 +1,12 @@
 import random
 from spaceObjects.spaceships.meteor import Meteor
-import timer
 
 class EnemiesCreator:
     def __init__(self, game):
         self.space_objects_manager = game.space_objects_manager
         self.stage = game.stage.stage
         self.screen = game.screen
-        self.timer = timer.Timer()
+        self.timer = game.timer
 
     def create(self):
         if self.can_create():
@@ -15,11 +14,10 @@ class EnemiesCreator:
             self.space_objects_manager.add_object(enemy)
 
     def can_create(self):
-        if self.timer.has_elapsed():
-            rand = random.randint(0, 400)
+        if self.timer.has_elapsed("enemies_creator_timer", 1):
+            rand = random.randint(0, 20)
             if rand <= 1 + self.stage:
                 return True
-            self.timer.set_time(0.1)
         return False
 
     def get_random_enemy(self):

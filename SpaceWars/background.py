@@ -34,11 +34,8 @@ class Background:
             self.screen.draw_dot(star.x, star.y, star.color)
 
     def process(self):
-        elapsed_time = self.timer.elapsed_time()
-        if elapsed_time == 0:
-            return
-
-        self.timer.set_time(0)
+        elapsed_time = self.timer.get_elapsed_time("stars")
+        self.timer.set_time("stars")
 
         for star in self.stars:
             star.x -= star.speed * elapsed_time
