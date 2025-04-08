@@ -8,6 +8,7 @@ class AbstractObject:
     life = 1
     max_speed = 100
     speed_acceleration = 100
+    img = False
 
     def __init__(self, pos_x, pos_y, name = "space_object"):
         self.pos_x = pos_x
@@ -27,7 +28,10 @@ class AbstractObject:
         y1 = self.pos_y - self.height /2
         x2 = self.pos_x + self.width / 2
         y2 = self.pos_y + self.height / 2
-        s.draw_rect_border(x1, y1, x2, y2, "red")
+        if self.img:
+            s.draw_image(x1, y1, self.img)
+        else:
+            s.draw_rect_border(x1, y1, x2, y2, "red")
 
     def set_max_speed(self):
         self.speed = self.max_speed
