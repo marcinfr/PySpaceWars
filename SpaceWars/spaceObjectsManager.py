@@ -20,6 +20,7 @@ class SpaceObjectsManager:
         for space_object in self.space_objects:
             if not space_object.is_alive():
                 self.space_objects.remove(space_object)
+                continue
 
             if space_object.is_enemy:
                 enemies.append(space_object)

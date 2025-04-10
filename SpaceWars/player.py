@@ -1,13 +1,14 @@
-from spaceObjects.spaceships.meteor import Meteor
+from spaceObjects.spaceships.ship01 import Ship01
 
 class Player:
     def __init__(self, game):
         self.events = game.events
         pos_x = 1
         pos_y = game.screen.height / 2
-        self.spaceship = Meteor(pos_x, pos_y,  "Player")
+        self.spaceship = Ship01(pos_x, pos_y,  "Player")
         self.spaceship.move_vector = [0, 0]
         self.spaceship.life = 100
+        self.spaceship.is_enemy = False
         self.spaceship.controller = self
         self.x_move_direction = 0
         self.y_move_direction = 0

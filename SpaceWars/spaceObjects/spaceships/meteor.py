@@ -1,5 +1,4 @@
 from spaceObjects.abstractObject import AbstractObject
-from screen import Screen
 
 class Meteor(AbstractObject):
     width = 184
