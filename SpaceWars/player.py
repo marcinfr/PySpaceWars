@@ -1,21 +1,23 @@
-from spaceObjects.spaceships.ship01 import Ship01
+from spaceshipFactory import SpaceshipFactory
 
 class Player:
     def __init__(self, game):
         self.events = game.events
         pos_x = 1
         pos_y = game.screen.height / 2
-        self.spaceship = Ship01(pos_x, pos_y,  "Player")
+        self.spaceship = SpaceshipFactory.create("ship01", pos_x, pos_y,  "Player")
         self.spaceship.move_vector = [0, 0]
         self.spaceship.life = 100
         self.spaceship.is_enemy = False
         self.spaceship.controller = self
+        self.spaceship.auto_shooting = False
         self.x_move_direction = 0
         self.y_move_direction = 0
         self.moving_up = False
         self.moving_down = False
         self.moving_left = False
         self.moving_right = False
+        self.spaceship.add_gun("default")
         game.space_objects_manager.add_object(self.spaceship)
         self.events.add_event("on_key_up", self, "on_key_up")
         self.events.add_event("on_key_down", self, "on_key_down")
@@ -52,6 +54,8 @@ class Player:
             case self.events.key_right:
                 self.moving_right = True
                 return
+            case self.events.key_space:
+                self.spaceship.shoot()
 
     def on_key_up(self, data):
         match data.key:
@@ -71,4 +75,6 @@ class Player:
                 self.moving_right = False
                 self.x_move_direction = 0
                 return
+            case self.events.key_space:
+                self.spaceship.shoot(False)
 

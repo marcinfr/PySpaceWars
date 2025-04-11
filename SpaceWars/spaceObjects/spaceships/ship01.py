@@ -1,6 +1,6 @@
-from spaceObjects.abstractObject import AbstractObject
+from spaceObjects.spaceships.shooter import Shooter
 
-class Ship01(AbstractObject):
+class Ship01(Shooter):
     width = 77
     height = 66
     max_speed = 400

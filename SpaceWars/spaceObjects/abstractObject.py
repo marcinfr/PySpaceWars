@@ -12,19 +12,22 @@ class AbstractObject:
     collision_damage = 1
     img = False
 
-    def __init__(self, pos_x, pos_y, name = "space_object"):
+    def __init__(self, pos_x = 0, pos_y = 0, name = "space_object"):
         self.pos_x = pos_x
         self.pos_y = pos_y
+        self.name = name
+        self.init()
+
+    def init(self):
         self.is_enemy = True
-        self.auto_shooting = False
         self.current_speed = 0
         self.current_speed_x = 0
         self.current_speed_y = 0
         self.speed = 0
         self.move_vector = [-2, 0]
-        self.name = name
         self.controller = False
         self.orientation_x = 1
+        self.is_shooting = False
         self.shape = spaceObjectShape.Rectangle(self.width, self.height)
 
     def display(self, s:Screen):
@@ -94,9 +97,6 @@ class AbstractObject:
     def on_collision(self, space_object):
         space_object.life -= self.collision_damage
         self.life = 0
-
-    def shoot(self):
-        ...
 
     def is_alive(self):
         if self.life <= 0:

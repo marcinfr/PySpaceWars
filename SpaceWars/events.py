@@ -9,6 +9,7 @@ class Events:
     key_down = "down"
     key_left = "left"
     key_right = "right"
+    key_space = "space"
 
     keys_map = {
         pygame.K_ESCAPE: key_esc,
@@ -16,6 +17,7 @@ class Events:
         pygame.K_DOWN: key_down,
         pygame.K_LEFT: key_left,
         pygame.K_RIGHT: key_right,
+        pygame.K_SPACE: key_space
     }
 
     def __init__(self):

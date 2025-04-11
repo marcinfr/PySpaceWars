@@ -1,6 +1,6 @@
 import random
-from spaceObjects.spaceships.meteor import Meteor
-from spaceObjects.spaceships.ship01 import Ship01
+from spaceshipFactory import SpaceshipFactory
+from gunFactory import GunFactory
 
 class EnemiesCreator:
     def __init__(self, game):
@@ -12,7 +12,8 @@ class EnemiesCreator:
     def create(self):
         if self.can_create():
             enemy = self.get_random_enemy()
-            self.space_objects_manager.add_object(enemy)
+            if enemy:
+                self.space_objects_manager.add_object(enemy)
 
     def can_create(self):
         if self.timer.has_elapsed("enemies_creator_timer", 1):
@@ -26,10 +27,18 @@ class EnemiesCreator:
         y = random.randint(0, self.screen.height)
         rand = random.randint(0, 4)
         if rand < 2:
-            enemy = Meteor(x, y)
+            spaceship_type = "meteor"
+            gun_type = False
         else:
-            enemy = Ship01(x, y)
-        enemy.pos_x += enemy.width / 2
-        enemy.set_max_speed(True)
-        enemy.orientation_x = -1
+            spaceship_type = "ship01"
+            gun_type = "default"
+
+        enemy = SpaceshipFactory.create(spaceship_type, x, y)
+
+        if enemy:
+            enemy.pos_x += enemy.width / 2
+            enemy.set_max_speed(True)
+            enemy.orientation_x = -1
+            if gun_type:
+                enemy.add_gun(gun_type)
         return enemy

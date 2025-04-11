@@ -44,6 +44,7 @@ class Game:
         self.running = False
 
     def run(self):
+        self.timer.start_game()
         while self.running:
             self.events.collect()
             self.process()
