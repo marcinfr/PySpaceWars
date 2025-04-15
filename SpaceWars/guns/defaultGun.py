@@ -2,13 +2,13 @@ from timer import Timer
 from bulletFactory import BulletFactory
 
 class DefaultGun:
-    cooldown = 10
+    cooldown = 2
 
     def __init__(self):
         self.is_shooting = False
 
     def get_bullets(self, x, y):
-        if Timer.has_elapsed(id(self), 5):
+        if Timer.has_elapsed(id(self), self.cooldown):
             bullet = self.create_bullet("default", x, y)
             if bullet:
                 return [bullet]

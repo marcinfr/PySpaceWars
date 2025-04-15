@@ -37,8 +37,8 @@ class EnemiesCreator:
 
         if enemy:
             enemy.pos_x += enemy.width / 2
-            enemy.set_max_speed(True)
             enemy.orientation_x = -1
+            enemy.set_max_speed(True)
             if gun_type:
                 enemy.add_gun(gun_type)
         return enemy

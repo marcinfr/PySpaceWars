@@ -46,8 +46,8 @@ class AbstractObject:
     def set_max_speed(self, as_current = False):
         self.speed = self.max_speed
         if as_current:
-            self.current_speed_x = self.max_speed
-            self.current_speed = self.speed
+            self.current_speed_x = self.max_speed * self.orientation_x
+            self.current_speed = self.max_speed
 
     def process(self, elapsed_time):
         if self.controller:
